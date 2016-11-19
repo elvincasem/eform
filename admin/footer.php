@@ -11,5 +11,9 @@
                                                 UiTables.init();
                                             });</script>
 
+
+        <!-- Load and execute javascript code used only in this page -->
+        <script src="js/pages/readyDashboard.js"></script>
+        <script>$(function(){ ReadyDashboard.init(); });</script>
     </body>
 </html>
