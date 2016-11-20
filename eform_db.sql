@@ -24,9 +24,11 @@ CREATE TABLE `project` (
   `formdate` date DEFAULT NULL,
   `originator` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`projectid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 /*Data for the table `project` */
+
+insert  into `project`(`projectid`,`projectname`,`projectnumber`,`projecttype`,`formdate`,`originator`) values (1,'Name','number','Counter Smart','2016-11-16','adsf'),(2,'name project','934876','Counter Smart','2016-11-16','adf'),(3,'name project','934876','Counter Smart','2016-11-16','adf'),(4,'dasf','adf','Counter Smart','2016-11-24','adf'),(5,'adsf','adsf','Defeciency','0000-00-00','adf'),(6,'asdf','adf','Defeciency','2016-11-17','adsf'),(7,'asdf','adf','Axiom','2016-11-18','dsaf');
 
 /*Table structure for table `project_incompletes` */
 

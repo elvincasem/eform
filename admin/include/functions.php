@@ -35,6 +35,86 @@ function singleSQL($q){
 	$conn = null;
 }
 
+
+
+/* start of eform*/
+
+
+//save requisition
+	if($_POST['action'] == "saveproject"){
+		//echo $_POST['action'];
+		$conn = dbConnect();
+		$projectname = $_POST['projectname'];
+		$projectnumber = $_POST['projectnumber'];
+		$projecttype = $_POST['projecttype'];
+		$projectdate = $_POST['projectdate'];
+		$signoff = $_POST['signoff'];
+
+		$sqlinsert = "INSERT INTO project(projectname,projectnumber,projecttype,formdate,originator) VALUES('$projectname','$projectnumber','$projecttype','$projectdate','$signoff')";
+		$save = $conn->prepare($sqlinsert);
+		$save->execute();
+		
+		//echo $sqlinsert;
+		//get last id
+		$sqlselect = "SELECT MAX(projectid) AS lastid FROM project WHERE projectnumber='$projectnumber'";
+		$stmt = $conn->prepare($sqlselect);
+		$stmt->execute();
+		$lastid = $stmt->fetch(PDO::FETCH_ASSOC);
+		echo $lastid['lastid'];
+		//echo $sqlselect;
+		$conn = null;
+
+	}
+
+
+
+
+
+/* end of eform*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//save requisition
 	if($_POST['action'] == "saverequisition"){
 

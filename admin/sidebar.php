@@ -2,7 +2,7 @@
                 <div id="sidebar">
                     <!-- Sidebar Brand -->
                     <div id="sidebar-brand" class="themed-background">
-                        <a href="index.html" class="sidebar-title">
+                        <a href="index.php" class="sidebar-title">
                             <!--<i class="fa fa-cube"></i> <span class="sidebar-nav-mini-hide">App<strong>UI</strong></span> -->
 							<img style="width:100%;" src="img/preview-logo.png">
                         </a>

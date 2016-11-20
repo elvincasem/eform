@@ -3,7 +3,7 @@
 function dbConnect (){
  	$conn =	null;
  	$host = 'localhost';
- 	$db = 	'supply_office';
+ 	$db = 	'eform';
  	$user = 'root';
  	$pwd = 	'';
 	try {

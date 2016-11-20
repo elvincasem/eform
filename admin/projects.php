@@ -63,10 +63,53 @@ include_once("include/functions.php");
                 <!-- Input States Content -->
                 <form action="#" method="post" class="form-horizontal" onsubmit="return false;">
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="state-normal">Project Name</label>
+                        <label class="col-md-3 control-label" for="state-normal">Project Name *</label>
                         <div class="col-md-7">
-                            <input type="text" id="state-normal" name="state-normal" class="form-control" >
+                            <input type="text" id="projectname" name="state-normal" class="form-control" >
                         </div>
+						
+						<label class="col-md-3 control-label" for="state-normal">Project Number</label>
+                        <div class="col-md-7">
+                            <input type="text" id="projectnumber" name="state-normal" class="form-control" >
+                        </div>
+						<label class="col-md-3 control-label" for="state-normal">Project Type</label>
+                        <div class="col-md-7">
+                            <select id="projecttype" name="example-select" class="form-control" size="1">
+							<option value="0"></option>
+                                <option value="Axiom">Axiom</option>
+                                <option value="Counter Smart">Counter Smart</option>
+                                <option value="Custom">Custom</option>
+                                <option value="Defeciency">Defeciency</option>
+								<option value="Dispatch">Dispatch</option>
+								<option value="Diversity">Diversity</option>
+								<option value="FAA">FAA</option>
+								<option value="Good Will">Good Will</option>
+								<option value="Honeywell">Honeywell</option>
+								<option value="Identity">Identity</option>
+								<option value="Millwork">Millwork</option>
+								<option value="Parts Job">Parts Job</option>
+								<option value="Raytheon">Raytheon</option>
+								<option value="Response">Response</option>
+								<option value="S-Series">S-Series</option>
+								<option value="Strategy Air">Strategy Air</option>
+								<option value="Strategy">Strategy</option>
+								<option value="Tracon">Tracon</option>
+								<option value="Warranty">Warranty</option>
+								
+								
+                            </select>
+                        </div>
+						
+						<label class="col-md-3 control-label" for="state-normal">Date</label>
+                        <div class="col-md-7">
+                          <input type="text" id="projectdate" name="example-datepicker3" class="form-control input-datepicker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd">
+                        </div>
+						
+						<label class="col-md-3 control-label" for="state-normal">Sign-Off Originator</label>
+                        <div class="col-md-7">
+                            <input type="text" id="signoff" name="state-normal" class="form-control" >
+                        </div>
+						
                     </div>
                     
                 </form>
@@ -78,7 +121,7 @@ include_once("include/functions.php");
 								
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-effect-ripple btn-primary">Save</button>
+                                <button type="button" class="btn btn-effect-ripple btn-primary" onclick="saveproject();">Save and Edit Details</button>
                                 <button type="button" class="btn btn-effect-ripple btn-danger" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -114,22 +157,19 @@ include_once("include/functions.php");
 						$itemlist = selectListSQL("SELECT * FROM project");
 						//print_r($employeelist);
 						foreach ($itemlist as $rows => $link) {
-							$itemNo = $link['itemNo'];
-							$description = $link['description'];
-							$unit = $link['unit'];
-							$unitcost = $link['unitCost'];
-							$category = $link['category'];
-							$inventoryqty = $link['inventory_qty'];
-							$brand = $link['brand'];
-							
+							$projectname = $link['projectname'];
+							$projectnumber = $link['projectnumber'];
+							$projecttype = $link['projecttype'];
+							$formdate = $link['formdate'];
+							$originator = $link['originator'];
+														
 							echo "<tr class='odd gradeX'>";
-							echo "<td>$itemNo</td>";
-							echo "<td><a href='itemdetails.php?id=$itemNo'>$description</a></td>";
-							echo "<td>$inventoryqty</td>";
-							echo "<td>$unit</td>";
-							echo "<td>$unitcost</td>";
-							echo "<td>$brand</td>";
-							echo "<td>$category</td>";
+							echo "<td><a href='#'>$projectname</a></td>";
+							echo "<td>$projectnumber</td>";
+							echo "<td>$projecttype</td>";
+							echo "<td>$formdate</td>";
+							echo "<td>$originator</td>";
+							
 							echo "<td class='center'> 
 								
 								<button class='btn btn-primary' onClick='edititem($itemNo)'  data-toggle='modal' data-target='#addItem'><i class='fa fa-edit'></i></button>
