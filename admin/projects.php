@@ -46,7 +46,7 @@ include_once("include/functions.php");
 			   <div class="col-lg-12">
 			   
 			   <!-- Regular Modal -->
-                <div id="modal-regular" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div id="addproject" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -63,6 +63,7 @@ include_once("include/functions.php");
                 <!-- Input States Content -->
                 <form action="#" method="post" class="form-horizontal" onsubmit="return false;">
                     <div class="form-group">
+					<input type="hidden" id="projectid" name="state-normal" class="form-control" >
                         <label class="col-md-3 control-label" for="state-normal">Project Name *</label>
                         <div class="col-md-7">
                             <input type="text" id="projectname" name="state-normal" class="form-control" >
@@ -121,7 +122,8 @@ include_once("include/functions.php");
 								
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-effect-ripple btn-primary" onclick="saveproject();">Save and Edit Details</button>
+                                <button type="button" id="saveproject" class="btn btn-effect-ripple btn-primary" onclick="saveproject();">Save and Edit Details</button>
+								<button type="button" id="updateproject" class="btn btn-effect-ripple btn-primary" onclick="saveproject();">Update</button>
                                 <button type="button" class="btn btn-effect-ripple btn-danger" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -131,7 +133,8 @@ include_once("include/functions.php");
 				
 						<!-- Partial Responsive Block -->
 						<div>
-					<a href="#modal-regular" class="btn btn-effect-ripple btn-primary" data-toggle="modal">Add Project</a>	
+						 <button type="button" id="addproject" class="btn btn-effect-ripple btn-primary" href="#addproject" data-toggle="modal" onclick="addproject();">Add Project</button>
+					
 					</div>
 				<div class="block full">
 				
@@ -157,6 +160,7 @@ include_once("include/functions.php");
 						$itemlist = selectListSQL("SELECT * FROM project");
 						//print_r($employeelist);
 						foreach ($itemlist as $rows => $link) {
+							$projectid = $link['projectid'];
 							$projectname = $link['projectname'];
 							$projectnumber = $link['projectnumber'];
 							$projecttype = $link['projecttype'];
@@ -172,8 +176,8 @@ include_once("include/functions.php");
 							
 							echo "<td class='center'> 
 								
-								<button class='btn btn-primary' onClick='edititem($itemNo)'  data-toggle='modal' data-target='#addItem'><i class='fa fa-edit'></i></button>
-								<button class='btn btn-danger notification' id='notification' onClick='deleteitem($itemNo)'><i class='fa fa-times'></i></button>
+								<button class='btn btn-primary' onClick='editproject($projectid)'  data-toggle='modal' data-target='#addproject'><i class='fa fa-edit'></i></button>
+								<button class='btn btn-danger notification' id='notification' onClick='deleteproject($projectid)'><i class='fa fa-times'></i></button>
 							</td>";
 							echo "</tr>";
 						}
