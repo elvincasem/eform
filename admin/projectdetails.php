@@ -1,5 +1,20 @@
 <?php
 include('header.php');
+include_once("include/functions.php");	
+
+		$conn = dbConnect();
+		$projectid = $_GET['id'];
+		$sqlselect = "SELECT * from project where projectid='$projectid'";
+		$stmt = $conn->prepare($sqlselect);
+		$stmt->execute();
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$projectname = $row['projectname'];
+		$projectnumber = $row['projectnumber'];
+		$projecttype = $row['projecttype'];
+		$formdate = $row['formdate'];
+		$originator = $row['originator'];
+		$conn = null;
+		
 ?>
     <body>
         <!-- Page Wrapper -->
@@ -72,19 +87,45 @@ include('header.php');
 										<tbody>
 											<tr>
 												<td><div class="text-black">Project Name:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input value="<?php echo $projectname;?>" type="text" id="projectname" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Number:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input value="<?php echo $projectnumber;?>"  type="text" id="projectnumber" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Product Type:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><select id="projecttype" name="example-select" class="form-control" size="1">
+												<?php
+												echo "<option value='$projecttype' selected>$projecttype</option>";
+												?>
+							<option value="0"></option>
+                                <option value="Axiom">Axiom</option>
+                                <option value="Counter Smart">Counter Smart</option>
+                                <option value="Custom">Custom</option>
+                                <option value="Defeciency">Defeciency</option>
+								<option value="Dispatch">Dispatch</option>
+								<option value="Diversity">Diversity</option>
+								<option value="FAA">FAA</option>
+								<option value="Good Will">Good Will</option>
+								<option value="Honeywell">Honeywell</option>
+								<option value="Identity">Identity</option>
+								<option value="Millwork">Millwork</option>
+								<option value="Parts Job">Parts Job</option>
+								<option value="Raytheon">Raytheon</option>
+								<option value="Response">Response</option>
+								<option value="S-Series">S-Series</option>
+								<option value="Strategy Air">Strategy Air</option>
+								<option value="Strategy">Strategy</option>
+								<option value="Tracon">Tracon</option>
+								<option value="Warranty">Warranty</option>
+								
+								
+                            </select></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Date:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-datepicker2" name="example-datepicker2" class="form-control input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy"></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-datepicker2" name="example-datepicker2" class="form-control input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy" value="<?php echo $formdate;?>"></span></td>
 											</tr>
 										</tbody>
 									</table>
@@ -122,173 +163,98 @@ include('header.php');
 					</div>	
 						
 					<div class="row">
+					
+					<!-- Regular Modal -->
+			<div id="addincompletes" class="modal" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3 class="modal-title"><strong>Incomplete Details</strong></h3>
+						</div>
+						<div class="modal-body">
+							
+							<div>
+                                <!-- Input States Block -->
+                                <div class="block">
+                                    
+
+                                    <!-- Input States Content -->
+                                    <form action="page_forms_components.html" method="post" class="form-horizontal" onsubmit="return false;">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="state-normal">Part Number</label>
+                                            <div class="col-md-6">
+                                                <input type="text" id="contactname" name="state-normal" class="form-control" >
+                                            </div>
+                                        </div>
+										<div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-select2">Part Description</label>
+                                            <div class="col-md-6">
+                                                <select id="partdescription" name="example-select2" class="select-select2" style="width: 100%;" data-placeholder="Choose one..">
+                                                    <option></option>
+													<option value="In Process">In Process</option>
+													<option value="Require Design">Require Design</option>
+						
+                                                </select>
+                                            </div>
+                                        </div>
+										
+										<div class="form-group">
+                                            <label class="col-md-3 control-label" for="state-normal">Notes</label>
+                                            <div class="col-md-6">
+                                                <textarea id="notes" class="form-control" ></textarea>
+                                            </div>
+                                        </div>
+										
+									
+                                        
+                                        
+                                    </form>
+                                    <!-- END Input States Content -->
+                                </div>
+                                <!-- END Input States Block -->
+							
+							
+							
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-effect-ripple btn-primary" onclick="savesinglecontact();">Save</button>
+							<button type="button" class="btn btn-effect-ripple btn-danger" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<!-- END Regular Modal -->
+					
+					
 					<div class="col-xs-12">
 						<!-- Partial Responsive Block -->
 						<div class="block">
 							<!-- Partial Responsive Title -->
 							<div class="block-title themed-background-dark text-light-op">
+								&nbsp;
+								<button id="add-incompletes" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addincompletes">
+								<i class="fa fa-plus-circle"></i> Add Item
+							</button>
 								<h2>INCOMPLETES</h2>
 							</div>
 							<!-- END Partial Responsive Title -->
 
 							<!-- Partial Responsive Content -->
-							<table class="table table-striped table-borderless table-vcenter">
+							<table class="table table-striped table-vcenter">
 								<thead>
 									<tr>
 										<th>Item</th>
-										<th class="text-center">Details</th>
+										<th class="text-center">Part Number</th>
+										<th class="text-center">Part Description</th>
+										<th class="text-center">Notes</th>
+										<th class="text-center"></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><div class="text-black">1</div></td>
-										<td>
-											<div class="widget-content widget-content-full">
-												<div class="row text-center">
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Number</strong></h2>
-														<input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder="">
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Description</strong></h2>
-														<div class="col-lg-12">
-															<select id="example-select" name="example-select" class="form-control" size="1">
-																<option value="0">In Process</option>
-																<option value="1">Require Design</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Notes</strong></h2>
-														<div class="col-lg-12">
-															<textarea id="example-textarea-input" name="example-textarea-input" rows="2" class="form-control" placeholder=""></textarea>
-														</div>
-													</div>
-													
-												</div>
-											</div>
-										</td>
-									</tr>
 									
-									<tr>
-										<td><div class="text-black">2</div></td>
-										<td>
-											<div class="widget-content widget-content-full">
-												<div class="row text-center">
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Number</strong></h2>
-														<input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder="">
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Description</strong></h2>
-														<div class="col-lg-12">
-															<select id="example-select" name="example-select" class="form-control" size="1">
-																<option value="0">In Process</option>
-																<option value="1">Require Design</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Notes</strong></h2>
-														<div class="col-lg-12">
-															<textarea id="example-textarea-input" name="example-textarea-input" rows="2" class="form-control" placeholder=""></textarea>
-														</div>
-													</div>
-													
-												</div>
-											</div>
-										</td>
-									</tr>
 									
-									<tr>
-										<td><div class="text-black">3</div></td>
-										<td>
-											<div class="widget-content widget-content-full">
-												<div class="row text-center">
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Number</strong></h2>
-														<input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder="">
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Description</strong></h2>
-														<div class="col-lg-12">
-															<select id="example-select" name="example-select" class="form-control" size="1">
-																<option value="0">In Process</option>
-																<option value="1">Require Design</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Notes</strong></h2>
-														<div class="col-lg-12">
-															<textarea id="example-textarea-input" name="example-textarea-input" rows="2" class="form-control" placeholder=""></textarea>
-														</div>
-													</div>
-													
-												</div>
-											</div>
-										</td>
-									</tr>
-									
-									<tr>
-										<td><div class="text-black">4</div></td>
-										<td>
-											<div class="widget-content widget-content-full">
-												<div class="row text-center">
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Number</strong></h2>
-														<input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder="">
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Description</strong></h2>
-														<div class="col-lg-12">
-															<select id="example-select" name="example-select" class="form-control" size="1">
-																<option value="0">In Process</option>
-																<option value="1">Require Design</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Notes</strong></h2>
-														<div class="col-lg-12">
-															<textarea id="example-textarea-input" name="example-textarea-input" rows="2" class="form-control" placeholder=""></textarea>
-														</div>
-													</div>
-													
-												</div>
-											</div>
-										</td>
-									</tr>
-									
-									<tr>
-										<td><div class="text-black">5</div></td>
-										<td>
-											<div class="widget-content widget-content-full">
-												<div class="row text-center">
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Number</strong></h2>
-														<input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder="">
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Part Description</strong></h2>
-														<div class="col-lg-12">
-															<select id="example-select" name="example-select" class="form-control" size="1">
-																<option value="0">In Process</option>
-																<option value="1">Require Design</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-xs-6 col-lg-4">
-														<h2 class="h5 text-uppercase push"><strong>Notes</strong></h2>
-														<div class="col-lg-12">
-															<textarea id="example-textarea-input" name="example-textarea-input" rows="2" class="form-control" placeholder=""></textarea>
-														</div>
-													</div>
-													
-												</div>
-											</div>
-										</td>
-									</tr>
 									
 								</tbody>
 							</table>
@@ -297,7 +263,21 @@ include('header.php');
 							
 							
 							
-							<div class="row">
+							
+							
+							
+							
+						</div>
+						
+						<!-- END Partial Responsive Block -->
+						</div>
+					</div>
+						
+					 <div class="block full">
+                            <div class="block-title themed-background-dark text-light-op">
+                                <h2>REGULAR PROJECT or EVANS F.A.T SIGN-OFF EXCEPTIONS</h2>
+                            </div>
+                            <div class="row">
 								<div class="col-sm-6 col-lg-3">
 									<div class="widget">
 										<div class="widget-content widget-content-mini themed-background-dark-flat">
@@ -457,16 +437,7 @@ include('header.php');
 								
 								
 							</div>
-							
-							
-							
-						</div>
-						
-						<!-- END Partial Responsive Block -->
-						</div>
-					</div>
-						
-					
+                        </div>
 					
 					
 					<!-- Datatables Block -->

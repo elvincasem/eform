@@ -168,7 +168,7 @@ include_once("include/functions.php");
 							$originator = $link['originator'];
 														
 							echo "<tr class='odd gradeX'>";
-							echo "<td><a href='#'>$projectname</a></td>";
+							echo "<td><a href='projectdetails.php?id=$projectid'>$projectname</a></td>";
 							echo "<td>$projectnumber</td>";
 							echo "<td>$projecttype</td>";
 							echo "<td>$formdate</td>";
