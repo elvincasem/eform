@@ -17,6 +17,8 @@ include_once("include/functions.php");
 		
 ?>
     <body>
+	
+	<input type="hidden" id="projectid" value="<?php echo $projectid;?>">
         <!-- Page Wrapper -->
         <!-- In the PHP version you can set the following options from inc/config file -->
         <!--
@@ -180,11 +182,11 @@ include_once("include/functions.php");
                                     
 
                                     <!-- Input States Content -->
-                                    <form action="page_forms_components.html" method="post" class="form-horizontal" onsubmit="return false;">
+                                    <form class="form-horizontal" onsubmit="return false;">
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="state-normal">Part Number</label>
                                             <div class="col-md-6">
-                                                <input type="text" id="contactname" name="state-normal" class="form-control" >
+                                                <input type="text" id="partnumber" name="state-normal" class="form-control" >
                                             </div>
                                         </div>
 										<div class="form-group">
@@ -218,8 +220,8 @@ include_once("include/functions.php");
 							
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-effect-ripple btn-primary" onclick="savesinglecontact();">Save</button>
-							<button type="button" class="btn btn-effect-ripple btn-danger" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-effect-ripple btn-primary" onclick="saveincomplete();">Save</button>
+							<button type="button" class="btn btn-effect-ripple btn-danger" id="closeincomplete" data-dismiss="modal">Close</button>
 						</div>
 					</div>
 				</div>
@@ -242,18 +244,43 @@ include_once("include/functions.php");
 							<!-- END Partial Responsive Title -->
 
 							<!-- Partial Responsive Content -->
-							<table class="table table-striped table-vcenter">
+							<table class="table table-striped table-vcenter" id="incompletestable">
 								<thead>
 									<tr>
-										<th>Item</th>
-										<th class="text-center">Part Number</th>
-										<th class="text-center">Part Description</th>
-										<th class="text-center">Notes</th>
+										<!-- <th>Item</th> -->
+										<th>Part Number</th>
+										<th>Part Description</th>
+										<th>Notes</th>
 										<th class="text-center"></th>
 									</tr>
 								</thead>
 								<tbody>
-									
+									<?php
+											
+											$incomplete_list = selectListSQL("SELECT * FROM project_incompletes where projectid='$projectid'");
+											//echo "SELECT * FROM project_incompletes where projectid='$projectid'";
+											//print_r($employeelist);
+											foreach ($incomplete_list as $rows => $link) {
+												$pdetailsid = $link['pdetailsid'];
+												$partnumber = $link['partnumber'];
+												$description = $link['description'];
+												$notes = $link['notes'];
+												
+												
+												echo "<tr class='odd gradeX'>";
+												//echo "<td>$pdetailsid</td>";
+												echo "<td>$partnumber</td>";
+												echo "<td>$description</td>";
+												echo "<td>$notes</td>";
+												
+												echo "<td class='center'> 
+													
+													
+													<button class='btn btn-danger notification' id='notification' onClick='deleteincomplete($pdetailsid)'><i class='fa fa-times'></i></button>
+												</td>";
+												echo "</tr>";
+											}
+											?>
 									
 									
 								</tbody>

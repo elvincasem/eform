@@ -115,3 +115,57 @@ $('#updateequipment').prop("disabled", true);
 	
 	
 }
+
+function saveincomplete(){
+	
+
+					var projectid = document.getElementById("projectid").value;
+					var partnumber = document.getElementById("partnumber").value;
+					var partdescription = document.getElementById("partdescription").value;
+					var notes = document.getElementById("notes").value;
+					
+					
+					
+					$.ajax({
+                    url: 'include/functions.php',
+                    type: 'post',
+                    data: {action: "saveincomplete", projectid: projectid, partnumber: partnumber,partdescription:partdescription,notes:notes},
+                    success: function(response) {
+						//console.log(response);
+						var lastid = parseInt(response);
+						var closeinc = document.getElementById("closeincomplete");
+						$('#incompletestable').load(document.URL +  ' #incompletestable');
+						//$('#incompletestable tr:last').after("<tr><td>"+partnumber+"</td><td>"+partdescription+"</td><td>"+notes+"</td><td><button class='btn btn-danger notification' id='notification' onClick='deleteincomplete("+lastid+")'><i class='fa fa-times'></i></button></td></tr>");
+						closeinc.click();
+						//var lastid = parseInt(response);
+						//window.location.href = "projectdetails.php?id="+lastid;
+
+						
+                    }
+                });
+
+	
+	
+}
+
+function deleteincomplete(id){
+	
+	var r = confirm("Are your sure you want to delete this detail?");
+    if (r == true) {
+        //alert ("You pressed OK!");
+		$.ajax({
+                    url: 'include/functions.php',
+                    type: 'post',
+                    data: {action: "deleteincomplete", pdetailsid: id},
+                    success: function(response) {
+						//location.reload();
+						$('#incompletestable').load(document.URL +  ' #incompletestable');
+                    }
+                });
+		
+    } if(r == false) {
+        //txt = "You pressed Cancel!";
+		
+    }
+	
+}

@@ -90,7 +90,42 @@ if($_POST['action'] == "getproject"){
 		$conn = null;
 	}
 
+if($_POST['action'] == "saveincomplete"){
+		
+		$conn = dbConnect();
+		$projectid = $_POST['projectid'];
+		$partnumber = $_POST['partnumber'];
+		$partdescription = $_POST['partdescription'];
+		$notes = $_POST['notes'];
+		
 
+		$sqlinsert = "INSERT INTO project_incompletes(projectid,partnumber,description,notes) VALUES('$projectid','$partnumber','$partdescription','$notes')";
+		$save = $conn->prepare($sqlinsert);
+		$save->execute();
+		
+		//get last id
+		$sqlselect = "SELECT MAX(pdetailsid) AS lastid FROM project_incompletes WHERE projectid='$projectid'";
+		$stmt = $conn->prepare($sqlselect);
+		$stmt->execute();
+		$lastid = $stmt->fetch(PDO::FETCH_ASSOC);
+		echo $lastid['lastid'];
+		
+		
+		//echo $sqlinsert;
+		$conn = null;
+
+	}
+	
+	if($_POST['action'] == "deleteincomplete"){
+		$conn = dbConnect();
+		$pdetailsid = $_POST['pdetailsid'];
+		$sqldelete = "DELETE FROM project_incompletes where pdetailsid='$pdetailsid';";
+		$delete = $conn->prepare($sqldelete);
+		$delete->execute();
+		$conn = null;
+
+	}
+	
 /* end of eform*/
 
 
