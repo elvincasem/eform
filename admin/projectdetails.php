@@ -4,7 +4,8 @@ include_once("include/functions.php");
 
 		$conn = dbConnect();
 		$projectid = $_GET['id'];
-		$sqlselect = "SELECT * from project where projectid='$projectid'";
+		$sqlselect = "SELECT * from project left join project_incompletes_q on project.projectid = project_incompletes_q.projectid left join project_assembly on project.projectid = project_assembly.projectid left join project_services on project.projectid = project_services.projectid where project.projectid='$projectid'";
+		echo $sqlselect;
 		$stmt = $conn->prepare($sqlselect);
 		$stmt->execute();
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -13,6 +14,337 @@ include_once("include/functions.php");
 		$projecttype = $row['projecttype'];
 		$formdate = $row['formdate'];
 		$originator = $row['originator'];
+		if($row['authshipment']=='YES'){
+			$authshipyes = "checked=checked";
+			$authshipno = "";
+		}else{
+			$authshipyes = "";
+			$authshipno = "checked=checked";
+		}
+		
+		print_r($row);
+		$authsolution = $row['authsolution'];
+		$authdate = $row['authdate'];
+		$hardwarebox = $row['hardwarebox'];
+		if($hardwarebox=='YES'){
+			$hardwareboxyes = "checked=checked";
+			$hardwareboxno = "";
+		}else{
+			$hardwareboxyes = "";
+			$hardwareboxno = "checked=checked";
+		}
+		$authpackaged = $row['authpackaged'];
+		if($authpackaged=='YES'){
+			$authpackagedyes = "checked=checked";
+			$authpackagedno = "";
+		}else{
+			$authpackagedyes = "";
+			$authpackagedno = "checked=checked";
+		}
+		$pmsee = $row['pmsee'];
+		if($pmsee=='YES'){
+			$pmseeyes = "checked=checked";
+			$pmseeno = "";
+		}else{
+			$pmseeyes = "";
+			$pmseeno = "checked=checked";
+		}
+		$pmsolution = $row['pmsolution'];
+		$pmdate = $row['pmdate'];
+		$pmexception = $row['pmexception'];
+		if($pmexception=='YES'){
+			$pmexceptionyes = "checked=checked";
+			$pmexceptionno = "";
+		}else{
+			$pmexceptionyes = "";
+			$pmexceptionno = "checked=checked";
+		}
+		$pmexsolution = $row['pmexsolution'];
+		$pmexdate = $row['pmexdate'];
+		//project assembly
+		$faintegration = $row['faintegration'];
+		$assemblynotes = $row['assemblynotes'];
+		$q101 = $row['q101'];
+		if($q101=='YES'){
+			$q101yes = "checked=checked";
+			$q101no = "";
+			$q101na = "";
+		}if($q101=='NO'){
+			$q101yes = "";
+			$q101no = "checked=checked";
+			$q101na = "";
+		}if($q101=='NA'){
+			$q101yes = "";
+			$q101no = "";
+			$q101na = "checked=checked";
+		}
+		
+		$q102 = $row['q102'];
+			if($q102=='YES'){
+			$q102yes = "checked=checked";
+			$q102no = "";
+			$q102na = "";
+		}if($q102=='NO'){
+			$q102yes = "";
+			$q102no = "checked=checked";
+			$q102na = "";
+		}if($q102=='NA'){
+			$q102yes = "";
+			$q102no = "";
+			$q102na = "checked=checked";
+		}
+		
+		$q103 = $row['q103'];
+			if($q103=='YES'){
+			$q103yes = "checked=checked";
+			$q103no = "";
+			$q103na = "";
+		}if($q103=='NO'){
+			$q103yes = "";
+			$q103no = "checked=checked";
+			$q103na = "";
+		}if($q103=='NA'){
+			$q103yes = "";
+			$q103no = "";
+			$q103na = "checked=checked";
+		}
+		$q104 = $row['q104'];
+			if($q104=='YES'){
+			$q104yes = "checked=checked";
+			$q104no = "";
+			$q104na = "";
+		}if($q104=='NO'){
+			$q104yes = "";
+			$q104no = "checked=checked";
+			$q104na = "";
+		}if($q104=='NA'){
+			$q104yes = "";
+			$q104no = "";
+			$q104na = "checked=checked";
+		}
+		$q105 = $row['q105'];
+			if($q105=='YES'){
+			$q105yes = "checked=checked";
+			$q105no = "";
+			$q105na = "";
+		}if($q105=='NO'){
+			$q105yes = "";
+			$q105no = "checked=checked";
+			$q105na = "";
+		}if($q105=='NA'){
+			$q105yes = "";
+			$q105no = "";
+			$q105na = "checked=checked";
+		}
+		$q106 = $row['q106'];
+			if($q106=='YES'){
+			$q106yes = "checked=checked";
+			$q106no = "";
+			$q106na = "";
+		}if($q106=='NO'){
+			$q106yes = "";
+			$q106no = "checked=checked";
+			$q106na = "";
+		}if($q106=='NA'){
+			$q106yes = "";
+			$q106no = "";
+			$q106na = "checked=checked";
+		}
+		$q107 = $row['q107'];
+			if($q107=='YES'){
+			$q107yes = "checked=checked";
+			$q107no = "";
+			$q107na = "";
+		}if($q107=='NO'){
+			$q107yes = "";
+			$q107no = "checked=checked";
+			$q107na = "";
+		}if($q107=='NA'){
+			$q107Yes = "";
+			$q107no = "";
+			$q107na = "checked=checked";
+		}
+		$q108 = $row['q108'];
+			if($q108=='YES'){
+			$q108yes = "checked=checked";
+			$q108no = "";
+			$q108na = "";
+		}if($q108=='NO'){
+			$q108yes = "";
+			$q108no = "checked=checked";
+			$q108na = "";
+		}if($q108=='NA'){
+			$q108yes = "";
+			$q108no = "";
+			$q108na = "checked=checked";
+		}
+		$q109 = $row['q109'];
+			if($q109=='YES'){
+			$q109yes = "checked=checked";
+			$q109no = "";
+			$q109na = "";
+		}if($q109=='NO'){
+			$q109yes = "";
+			$q109no = "checked=checked";
+			$q109na = "";
+		}if($q109=='NA'){
+			$q109yes = "";
+			$q109no = "";
+			$q109na = "checked=checked";
+		}
+		$q110 = $row['q110'];
+			if($q110=='YES'){
+			$q110yes = "checked=checked";
+			$q110no = "";
+			$q110na = "";
+		}if($q110=='NO'){
+			$q110yes = "";
+			$q110no = "checked=checked";
+			$q110na = "";
+		}if($q110=='NA'){
+			$q110yes = "";
+			$q110no = "";
+			$q110na = "checked=checked";
+		}
+		$q112 = $row['q112'];
+			if($q112=='YES'){
+			$q112yes = "checked=checked";
+			$q112no = "";
+			$q112na = "";
+		}if($q112=='NO'){
+			$q112yes = "";
+			$q112no = "checked=checked";
+			$q112na = "";
+		}if($q112=='NA'){
+			$q112yes = "";
+			$q112no = "";
+			$q112na = "checked=checked";
+		}
+		$q113 = $row['q113'];
+			if($q113=='YES'){
+			$q113yes = "checked=checked";
+			$q113no = "";
+			$q113na = "";
+		}if($q113=='NO'){
+			$q113yes = "";
+			$q113no = "checked=checked";
+			$q113na = "";
+		}if($q113=='NO'){
+			$q113yes = "";
+			$q113no = "";
+			$q113na = "checked=checked";
+		}
+		
+		//project servicesnotes
+		$q21 = $row['q21'];
+		//echo $q21;
+		if($q21=='YES'){
+			$q21yes = "checked=checked";
+			$q21no = "";
+			$q21na = "";
+		}if($q21=='NO'){
+			$q21yes = "";
+			$q21no = "checked=checked";
+			$q21na = "";
+		}if($q21=='NA'){
+			$q21yes = "";
+			$q21no = "";
+			$q21na = "checked=checked";
+		}
+		//project servicesnotes
+		$q22 = $row['q22'];
+		if($q22=='YES'){
+			$q22yes = "checked=checked";
+			$q22no = "";
+			$q22na = "";
+		}if($q22=='NO'){
+			$q22yes = "";
+			$q22no = "checked=checked";
+			$q22na = "";
+		}if($q22=='NA'){
+			$q22yes = "";
+			$q22no = "";
+			$q22na = "checked=checked";
+		}
+		//project servicesnotes
+		$q23 = $row['q23'];
+		if($q23=='YES'){
+			$q23yes = "checked=checked";
+			$q23no = "";
+			$q23na = "";
+		}if($q23=='NO'){
+			$q23yes = "";
+			$q23no = "checked=checked";
+			$q23na = "";
+		}if($q23=='NA'){
+			$q23yes = "";
+			$q23no = "";
+			$q23na = "checked=checked";
+		}
+		//project servicesnotes
+		$q24 = $row['q24'];
+		if($q24=='YES'){
+			$q24yes = "checked=checked";
+			$q24no = "";
+			$q24na = "";
+		}if($q24=='NO'){
+			$q24yes = "";
+			$q24no = "checked=checked";
+			$q24na = "";
+		}if($q24=='NA'){
+			$q24yes = "";
+			$q24no = "";
+			$q24na = "checked=checked";
+		}
+		//project servicesnotes
+		$q25 = $row['q25'];
+			if($q25=='YES'){
+			$q25yes = "checked=checked";
+			$q25no = "";
+			$q25na = "";
+		}if($q25=='NO'){
+			$q25yes = "";
+			$q25no = "checked=checked";
+			$q25na = "";
+		}if($q25=='NA'){
+			$q25yes = "";
+			$q25no = "";
+			$q25na = "checked=checked";
+		}
+		//project servicesnotes
+		$q26 = $row['q26'];
+		if($q26=='YES'){
+			$q26yes = "checked=checked";
+			$q26no = "";
+			$q26na = "";
+		}if($q26=='NO'){
+			$q26yes = "";
+			$q26no = "checked=checked";
+			$q26na = "";
+		}if($q26=='NA'){
+			$q26yes = "";
+			$q26no = "";
+			$q26na = "checked=checked";
+		}
+		//project servicesnotes
+		$q27 = $row['q27'];
+		if($q27=='YES'){
+			$q27yes = "checked=checked";
+			$q27no = "";
+			$q27na = "";
+		}if($q27=='NO'){
+			$q27yes = "";
+			$q27no = "checked=checked";
+			$q27na = "";
+		}if($q27=='NA'){
+			$q27yes = "";
+			$q27no = "";
+			$q27na = "checked=checked";
+		}
+		
+		$servicesname = $row['servicesname'];
+		$servicesnotes = $row['servicesnotes'];
+		
 		$conn = null;
 		
 ?>
@@ -89,15 +421,15 @@ include_once("include/functions.php");
 										<tbody>
 											<tr>
 												<td><div class="text-black">Project Name:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input value="<?php echo $projectname;?>" type="text" id="projectname" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input value="<?php echo $projectname;?>" type="text" id="projectname" name="example-input-small" class="form-control" placeholder="" disabled></span></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Number:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input value="<?php echo $projectnumber;?>"  type="text" id="projectnumber" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input value="<?php echo $projectnumber;?>"  type="text" id="projectnumber" name="example-input-small" class="form-control" placeholder="" disabled></span></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Product Type:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><select id="projecttype" name="example-select" class="form-control" size="1">
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><select id="projecttype" name="example-select" class="form-control" size="1" disabled>
 												<?php
 												echo "<option value='$projecttype' selected>$projecttype</option>";
 												?>
@@ -127,7 +459,7 @@ include_once("include/functions.php");
 											</tr>
 											<tr>
 												<td><div class="text-black">Date:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-datepicker2" name="example-datepicker2" class="form-control input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy" value="<?php echo $formdate;?>"></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-datepicker2" name="example-datepicker2" class="form-control input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy" value="<?php echo $formdate;?>" disabled></span></td>
 											</tr>
 										</tbody>
 									</table>
@@ -236,10 +568,11 @@ include_once("include/functions.php");
 							<!-- Partial Responsive Title -->
 							<div class="block-title themed-background-dark text-light-op">
 								&nbsp;
-								<button id="add-incompletes" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addincompletes">
-								<i class="fa fa-plus-circle"></i> Add Item
-							</button>
+								
 								<h2>INCOMPLETES</h2>
+								<div style="padding-left:10px;padding-bottom:5px;"><button id="add-incompletes" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addincompletes">
+								<i class="fa fa-plus-circle"></i> Add Item
+							</button></div>
 							</div>
 							<!-- END Partial Responsive Title -->
 
@@ -302,7 +635,12 @@ include_once("include/functions.php");
 						
 					 <div class="block full">
                             <div class="block-title themed-background-dark text-light-op">
-                                <h2>REGULAR PROJECT or EVANS F.A.T SIGN-OFF EXCEPTIONS</h2>
+							
+                              <!--  <h2>REGULAR PROJECT or EVANS F.A.T SIGN-OFF EXCEPTIONS</h2> -->
+								<div style="padding-left:10px;padding-bottom:5px;padding-top:5px;"><button id="add-incompletes" class="btn btn-primary btn-sm" onclick="saveexceptions(<?php echo $projectid;?>);">
+								<i class="fa fa-save"></i> Save Exceptions
+							</button></div>
+								<div class="pull-right"></div>
                             </div>
                             <div class="row">
 								<div class="col-sm-6 col-lg-3">
@@ -314,28 +652,24 @@ include_once("include/functions.php");
 											<div class="text-center">
 											<span class="widget-heading text-dark">
 												<div class="form-group">
-													<div class="radio">
-                                                    <label for="firstradio-yes">
-                                                        <input type="radio" id="firstradio-yes" name="first-radios" value="YES"><strong>YES</strong>
-                                                    </label>
-													</div>
-													
-													<div class="radio">
-                                                    <label for="firstradio-no">
-                                                        <input type="radio" id="firstradio-no" name="first-radios" value="NO"><strong>NO</strong>
-                                                    </label>
-													</div>
+													<label class="radio-inline" for="example-inline-radio1">
+													<input type="radio" id="authyes" name="example-inline-radios" value="YES" <?php echo $authshipyes;?>> YES
+												</label>
+												<label class="radio-inline" for="example-inline-radio2">
+													<input type="radio" id="authno" name="example-inline-radios" value="NO" <?php echo $authshipno;?>> NO
+												</label>
 												</div>
 											</span>
 											</div>
 											<br>
+											
 											<div class="widget-heading text-dark">
 												<div class="text-black">Solutions/ CS Rep:</div>
-												<span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span>
+												<span class="text-muted"><input type="text" id="authsolution" name="example-input-small" class="form-control" placeholder="" value="<?php echo $authsolution;?>"></span>
 											</div>
 											<div class="widget-heading text-dark">
 												<div class="text-black">Date:</div>
-												<span class="text-muted"><input type="text" id="example-datepicker2" name="example-datepicker2" class="form-control input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy"></span>
+												<span class="text-muted"><input type="text" id="authdate" name="example-datepicker2" class="form-control input-datepicker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="<?php echo $authdate;?>"></span>
 											</div>
 										</div>
 									</div>
@@ -351,14 +685,14 @@ include_once("include/functions.php");
 											<div class="text-center">
 											<span class="widget-heading text-dark">
 												<div class="form-group">
-													<div class="radio">
+													<div class="radio-inline">
 														<label for="secondradio-yes">
-															<input type="radio" id="secondradio-yes" name="second-radios" value="OF">OF
+															<input type="radio" id="hardwareyes" name="second-radios" value="YES"  <?php echo $hardwareboxyes;?>>YES
 														</label>
 													</div>
-													<div class="radio">
+													<div class="radio-inline">
 														<label for="secondradio-no">
-															<input type="radio" id="secondradio-no" name="second-radios" value="NONE">
+															<input type="radio" id="hardwareno" name="second-radios" value="NO"  <?php echo $hardwareboxno;?>>NO
 														</label>
 													</div>
 												</div>
@@ -373,14 +707,14 @@ include_once("include/functions.php");
 											<div class="text-center">
 											<span class="widget-heading text-dark">
 												<div class="form-group">
-												<div class="radio">
+												<div class="radio-inline">
                                                     <label for="thirdradio-yes">
-                                                        <input type="radio" id="thirdradio-yes" name="third-radios" value="YES"><strong>YES</strong>
+                                                        <input type="radio" id="authpackyes" name="third-radios" value="YES" <?php echo $authpackagedyes;?>><strong>YES</strong>
                                                     </label>
                                                 </div>
-                                                <div class="radio">
+                                                <div class="radio-inline">
                                                     <label for="thirdradio-no">
-                                                        <input type="radio" id="thirdradio-no" name="third-radios" value="NO"><strong>NO</strong>
+                                                        <input type="radio" id="authpackno" name="third-radios" value="NO" <?php echo $authpackagedno;?>><strong>NO</strong>
                                                     </label>
                                                 </div>
                                                 </div>
@@ -399,15 +733,15 @@ include_once("include/functions.php");
 											<div class="text-center">
 											<span class="widget-heading text-dark">
 												<div class="form-group">
-													<div class="radio">
+													<div class="radio-inline">
                                                     <label for="fourthradio-yes">
-                                                        <input type="radio" id="fourthradio-yes" name="fourth-radios" value="YES"><strong>YES</strong>
+                                                        <input type="radio" id="pmseeyes" name="fourth-radios" value="YES" <?php echo $pmseeyes;?>><strong>YES</strong>
                                                     </label>
 													</div>
 													
-													<div class="radio">
+													<div class="radio-inline">
                                                     <label for="fourthradio-no">
-                                                        <input type="radio" id="fourthradio-no" name="fourth-radios" value="NO"><strong>NO</strong>
+                                                        <input type="radio" id="pmseeno" name="fourth-radios" value="NO" <?php echo $pmseeno;?>><strong>NO</strong>
                                                     </label>
 													</div>
 												</div>
@@ -416,11 +750,11 @@ include_once("include/functions.php");
 											<br>
 											<div class="widget-heading text-dark">
 												<div class="text-black">Solutions/ CS Rep:</div>
-												<span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span>
+												<span class="text-muted"><input type="text" name="example-input-small" class="form-control" placeholder="" id="pmsolution" value="<?php echo $pmsolution;?>"></span>
 											</div>
 											<div class="widget-heading text-dark">
 												<div class="text-black">Date:</div>
-												<span class="text-muted"><input type="text" id="example-datepicker2" name="example-datepicker2" class="form-control input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy"></span>
+												<span class="text-muted"><input type="text" id="pmdate" name="example-datepicker2" class="form-control input-datepicker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="<?php echo $pmdate;?>"></span>
 											</div>
 										</div>
 									</div>
@@ -435,15 +769,15 @@ include_once("include/functions.php");
 											<div class="text-center">
 											<span class="widget-heading text-dark">
 												<div class="form-group">
-													<div class="radio">
+													<div class="radio-inline">
                                                     <label for="fifthradio-yes">
-                                                        <input type="radio" id="fifthradio-yes" name="fifth-radios" value="YES"><strong>YES</strong>
+                                                        <input type="radio" id="pmexceptionyes" name="fifth-radios" value="YES" <?php echo $pmexceptionyes;?>><strong>YES</strong>
                                                     </label>
 													</div>
 													
-													<div class="radio">
+													<div class="radio-inline">
                                                     <label for="fifthradio-no">
-                                                        <input type="radio" id="fifthradio-no" name="fifth-radios" value="NO"><strong>NO</strong>
+                                                        <input type="radio" id="pmexceptionno" name="fifth-radios" value="NO" <?php echo $pmexceptionno;?>><strong>NO</strong>
                                                     </label>
 													</div>
 												</div>
@@ -452,11 +786,11 @@ include_once("include/functions.php");
 											<br>
 											<div class="widget-heading text-dark">
 												<div class="text-black">Solutions/ CS Rep:</div>
-												<span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span>
+												<span class="text-muted"><input type="text" name="example-input-small" class="form-control" placeholder="" id="pmexsolution" value="<?php echo $pmexsolution;?>"></span>
 											</div>
 											<div class="widget-heading text-dark">
 												<div class="text-black">Date:</div>
-												<span class="text-muted"><input type="text" id="example-datepicker2" name="example-datepicker2" class="form-control input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy"></span>
+												<span class="text-muted"><input type="text" id="pmexdate" name="example-datepicker2" class="form-control input-datepicker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="<?php echo $pmexdate;?>"></span>
 											</div>
 										</div>
 									</div>
@@ -544,8 +878,11 @@ include_once("include/functions.php");
 					<!-- Datatables Block -->
                         <!-- Datatables is initialized in js/pages/uiTables.js -->
                         <div class="block full">
-                            <div class="block-title themed-background-dark text-light-op">
-                                <h2>1. REGULAR PROJECT or EVANS F.A.T SIGN-OFF EXCEPTIONS</h2>
+                            <div class="block-title themed-background-dark text-light-op ">
+                                <h2>Final Assembly / Integration</h2>
+								<div style="padding-left:10px;padding-bottom:5px;padding-top:5px;"><button id="add-incompletes" class="btn btn-primary btn-sm" onclick="saveassembly(<?php echo $projectid;?>);">
+								<i class="fa fa-save"></i> Save Assenbly
+							</button></div>
                             </div>
 							
 							<div class="row">
@@ -553,7 +890,7 @@ include_once("include/functions.php");
 							<div class="col-lg-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-user"></i></span>
-								<input type="text" id="example-input1-group1" name="example-input1-group1" class="form-control" placeholder="Name">
+								<input type="text" id="faintegration" name="example-input1-group1" class="form-control" placeholder="Name" value="<?php echo $faintegration;?>">
 							</div>
 							</div>
 							</div>
@@ -571,9 +908,9 @@ include_once("include/functions.php");
 							
 							<div class="widget">
 								<div class="widget-content widget-content-full">
-									<table class="table table-striped table-borderless remove-margin sub-header">
+									<table class="table table-striped table-hover remove-margin sub-header ">
 										<tbody>
-											<tr>
+											<tr >
 												<td><div class="text-black"><strong>Standard Inspection Item</strong></div></td>
 												<td class="text-right" style="width: 80px;"><strong>YES &nbsp &nbsp &nbsp NO  &nbsp &nbsp &nbsp N/A</strong></td>
 											</tr>
@@ -583,17 +920,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.01 Components Match the BoM?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q101yes">
-														<input type="radio" id="q101yes" name="q101" value="">
+														<input type="radio" id="q101yes" name="q101" value="YES" <?php echo $q101yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q101no">
-														<input type="radio" id="q101no" name="q101" value="">
+														<input type="radio" id="q101no" name="q101" value="NO" <?php echo $q101no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q101na">
-														<input type="radio" id="q101na" name="q101" value="">
+														<input type="radio" id="q101na" name="q101" value="NA" <?php echo $q101na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -602,17 +939,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.02 Hardware Box completed?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q102yes">
-														<input type="radio" id="q102yes" name="q102" value="">
+														<input type="radio" id="q102yes" name="q102" value="YES" <?php echo $q102yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q102no">
-														<input type="radio" id="q102no" name="q102" value="">
+														<input type="radio" id="q102no" name="q102" value="NO" <?php echo $q102no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q102na">
-														<input type="radio" id="q102na" name="q102" value="">
+														<input type="radio" id="q102na" name="q102" value="NA" <?php echo $q102na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -621,17 +958,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.03 Electrical Assembly checklist received?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q103yes">
-														<input type="radio" id="q103yes" name="q103" value="">
+														<input type="radio" id="q103yes" name="q103" <?php echo $q103yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q103no">
-														<input type="radio" id="q103no" name="q103" value="">
+														<input type="radio" id="q103no" name="q103" <?php echo $q103na; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q103na">
-														<input type="radio" id="q103na" name="q103" value="">
+														<input type="radio" id="q103na" name="q103" <?php echo $q103na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -640,17 +977,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.04 Metal Assembly checklist and BoM received?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q104yes">
-														<input type="radio" id="q104yes" name="q104" value="">
+														<input type="radio" id="q104yes" name="q104" <?php echo $q104yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q104no">
-														<input type="radio" id="q104no" name="q104" value="">
+														<input type="radio" id="q104no" name="q104" <?php echo $q104no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q104na">
-														<input type="radio" id="q104na" name="q104" value="">
+														<input type="radio" id="q104na" name="q104" <?php echo $q104na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -659,17 +996,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.05 Cladding Assembly checklist and BoM received?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q105yes">
-														<input type="radio" id="q105yes" name="q105" value="">
+														<input type="radio" id="q105yes" name="q105" <?php echo $q105yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q105no">
-														<input type="radio" id="q105no" name="q105" value="">
+														<input type="radio" id="q105no" name="q105"<?php echo $q105no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q105na">
-														<input type="radio" id="q105na" name="q105" value="">
+														<input type="radio" id="q105na" name="q105" <?php echo $q105na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -678,17 +1015,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.06 Product specific checklist completed?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q106yes">
-														<input type="radio" id="q106yes" name="q106" value="">
+														<input type="radio" id="q106yes" name="q106" <?php echo $q106yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q106no">
-														<input type="radio" id="q106no" name="q106" value="">
+														<input type="radio" id="q106no" name="q106" <?php echo $q106na; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q106na">
-														<input type="radio" id="q106na" name="q106" value="">
+														<input type="radio" id="q106na" name="q106"<?php echo $q106na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -697,17 +1034,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.07 Exceptions as per manufacturing checklists noted on the exceptions?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q107yes">
-														<input type="radio" id="q107yes" name="q107" value="">
+														<input type="radio" id="q107yes" name="q107" <?php echo $q107yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q107no">
-														<input type="radio" id="q107no" name="q107" value="">
+														<input type="radio" id="q107no" name="q107" <?php echo $q107no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q107na">
-														<input type="radio" id="q107na" name="q107" value="">
+														<input type="radio" id="q107na" name="q107" <?php echo $q107na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -716,17 +1053,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.08 Any Changes to the BoM at Sign Off?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q108yes">
-														<input type="radio" id="q108yes" name="q108" value="">
+														<input type="radio" id="q108yes" name="q108" <?php echo $q108yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q108no">
-														<input type="radio" id="q108no" name="q108" value="">
+														<input type="radio" id="q108no" name="q108" <?php echo $q108no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q108na">
-														<input type="radio" id="q108na" name="q108" value="">
+														<input type="radio" id="q108na" name="q108" <?php echo $q108na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -735,17 +1072,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.09 Shipping Packet included on door at module 1?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q109yes">
-														<input type="radio" id="q109yes" name="q109" value="">
+														<input type="radio" id="q109yes" name="q109" <?php echo $q109yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q109no">
-														<input type="radio" id="q109no" name="q109" value="">
+														<input type="radio" id="q109no" name="q109" <?php echo $q109no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q109na">
-														<input type="radio" id="q109na" name="q109" value="">
+														<input type="radio" id="q109na" name="q109" <?php echo $q109na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -754,17 +1091,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.10 All Specials on Finish Schedule Completed?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q110yes">
-														<input type="radio" id="q110yes" name="q110" value="">
+														<input type="radio" id="q110yes" name="q110" <?php echo $q110yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q110no">
-														<input type="radio" id="q110no" name="q110" value="">
+														<input type="radio" id="q110no" name="q110" <?php echo $q110no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q110na">
-														<input type="radio" id="q110na" name="q110" value="">
+														<input type="radio" id="q110na" name="q110" <?php echo $q110na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -788,17 +1125,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.12 Product fully staged?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q112yes">
-														<input type="radio" id="q112yes" name="q112" value="">
+														<input type="radio" id="q112yes" name="q112" <?php echo $q112yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q112no">
-														<input type="radio" id="q112no" name="q112" value="">
+														<input type="radio" id="q112no" name="q112" <?php echo $q112no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q112na">
-														<input type="radio" id="q112na" name="q112" value="">
+														<input type="radio" id="q112na" name="q112" <?php echo $q112na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -807,17 +1144,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">1.13 Product partially staged?<br>Position nos.:<input type="text" id="" name="" class="form-control" placeholder=""></div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q113yes">
-														<input type="radio" id="q113yes" name="q113" value="">
+														<input type="radio" id="q113yes" name="q113" <?php echo $q113yes; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q113no">
-														<input type="radio" id="q113no" name="q113" value="">
+														<input type="radio" id="q113no" name="q113" <?php echo $q113no; ?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q113na">
-														<input type="radio" id="q113na" name="q113" value="">
+														<input type="radio" id="q113na" name="q113" <?php echo $q113na; ?>>
 													</label>
 												</td>
 											</tr>
@@ -829,7 +1166,7 @@ include_once("include/functions.php");
 								<div class="col-xs-12">
 									<h2 class="h5 text-uppercase push text-center"><strong>Final Assembly Notes:</strong></h2>
 									<div class="col-lg-12">
-										<textarea id="example-textarea-input" name="example-textarea-input" rows="2" class="form-control" placeholder=""></textarea>
+										<textarea id="assemblynotes" name="example-textarea-input" rows="2" class="form-control" placeholder=""><?php echo $faintegration;?></textarea>
 									</div>
 								</div>
 								</div>
@@ -843,6 +1180,9 @@ include_once("include/functions.php");
 						<div class="block full">
                             <div class="block-title themed-background-dark text-light-op">
                                 <h2>2. SOLUTIONS/CLIENT SERVICES</h2>
+								<div style="padding-left:10px;padding-bottom:5px;padding-top:5px;"><button id="add-incompletes" class="btn btn-primary btn-sm" onclick="saveservices(<?php echo $projectid;?>);">
+								<i class="fa fa-save"></i> Save Services
+							</button></div>
                             </div>
 							
 							<div class="row">
@@ -850,7 +1190,7 @@ include_once("include/functions.php");
 							<div class="col-lg-6">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-user"></i></span>
-								<input type="text" id="example-input1-group1" name="example-input1-group1" class="form-control" placeholder="Name">
+								<input type="text" id="servicename" name="example-input1-group1" class="form-control" placeholder="Name" value="<?php echo $servicesname;?>">
 							</div>
 							</div>
 							</div>
@@ -871,17 +1211,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">2.1 Console/Millwork: Colors match Finish Schedule</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q21yes">
-														<input type="radio" id="q21yes" name="q21" value="">
+														<input type="radio" id="q21yes" name="q21" <?php echo $q21yes;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q21no">
-														<input type="radio" id="q21no" name="q21" value="">
+														<input type="radio" id="q21no" name="q21" <?php echo $q21no;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q21na">
-														<input type="radio" id="q21na" name="q21" value="">
+														<input type="radio" id="q21na" name="q21" <?php echo $q21na;?>>
 													</label>
 												</td>
 											</tr>
@@ -890,17 +1230,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">2.2 Console: Client equipment will fit into console. Measurement taken</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q22yes">
-														<input type="radio" id="q22yes" name="q22" value="">
+														<input type="radio" id="q22yes" name="q22" <?php echo $q22yes;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q22no">
-														<input type="radio" id="q22no" name="q22" value="">
+														<input type="radio" id="q22no" name="q22" <?php echo $q22no;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q22na">
-														<input type="radio" id="q22na" name="q22" value="">
+														<input type="radio" id="q22na" name="q22" <?php echo $q22na;?>>
 													</label>
 												</td>
 											</tr>
@@ -909,17 +1249,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">2.3 Buyouts: All Buyout scope is correct (slatwall mount vs. desktop mount)</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q23yes">
-														<input type="radio" id="q23yes" name="q23" value="">
+														<input type="radio" id="q23yes" name="q23" <?php echo $q23yes;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q23no">
-														<input type="radio" id="q23no" name="q23" value="">
+														<input type="radio" id="q23no" name="q23" <?php echo $q23no;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q23na">
-														<input type="radio" id="q23na" name="q23" value="">
+														<input type="radio" id="q23na" name="q23" <?php echo $q23na;?>>
 													</label>
 												</td>
 											</tr>
@@ -928,17 +1268,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">2.4 Buyouts:  All Buyouts have been packaged together or installed on console correctly.</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q24yes">
-														<input type="radio" id="q24yes" name="q24" value="">
+														<input type="radio" id="q24yes" name="q24" <?php echo $q24yes;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q24no">
-														<input type="radio" id="q24no" name="q24" value="">
+														<input type="radio" id="q24no" name="q24"  <?php echo $q24no;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q24na">
-														<input type="radio" id="q24na" name="q24" value="">
+														<input type="radio" id="q24na" name="q24"  <?php echo $q24na;?>>
 													</label>
 												</td>
 											</tr>
@@ -947,17 +1287,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">2.5 Buyouts:  All Buyouts free from damages, and have been checked for quality</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q25yes">
-														<input type="radio" id="q25yes" name="q25" value="">
+														<input type="radio" id="q25yes" name="q25"  <?php echo $q25yes;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q25no">
-														<input type="radio" id="q25no" name="q25" value="">
+														<input type="radio" id="q25no" name="q25"  <?php echo $q25no;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q25na">
-														<input type="radio" id="q25na" name="q25" value="">
+														<input type="radio" id="q25na" name="q25"  <?php echo $q25na;?>>
 													</label>
 												</td>
 											</tr>
@@ -966,17 +1306,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">2.6 Customer Equipment: Is there any customer equipment to be returned?</div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q26yes">
-														<input type="radio" id="q26yes" name="q26" value="">
+														<input type="radio" id="q26yes" name="q26"  <?php echo $q26yes;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q26no">
-														<input type="radio" id="q26no" name="q26" value="">
+														<input type="radio" id="q26no" name="q26" <?php echo $q26no;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q26na">
-														<input type="radio" id="q26na" name="q26" value="">
+														<input type="radio" id="q26na" name="q26"  <?php echo $q26na;?>>
 													</label>
 												</td>
 											</tr>
@@ -985,17 +1325,17 @@ include_once("include/functions.php");
 												<td><div class="text-black">2.7 TKS Products to be consolidated with console shipment (Canada / International)<span class="help-block">*Parts, Warranties, Deficiencies and Goodwill - Client Services will sign-off the section of this form.</span></div></td>
 												<td class="text-right" style="width: 30%;">
 													<label for="q27yes">
-														<input type="radio" id="q27yes" name="q27" value="">
+														<input type="radio" id="q27yes" name="q27"  <?php echo $q27yes;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp
 													<label for="q27no">
-														<input type="radio" id="q27no" name="q27" value="">
+														<input type="radio" id="q27no" name="q27"  <?php echo $q27no;?>>
 													</label>
 													&nbsp &nbsp &nbsp
 													&nbsp &nbsp &nbsp
 													<label for="q27na">
-														<input type="radio" id="q27na" name="q27" value="">
+														<input type="radio" id="q27na" name="q27"  <?php echo $q27na;?>>
 													</label>
 												</td>
 											</tr>
@@ -1079,7 +1419,7 @@ include_once("include/functions.php");
 								<div class="col-xs-12">
 									<h2 class="h5 text-uppercase push text-center"><strong>Solutions/Client Services Notes:</strong></h2>
 									<div class="col-lg-12">
-										<textarea id="example-textarea-input" name="example-textarea-input" rows="2" class="form-control" placeholder=""></textarea>
+										<textarea id="servicesnotes" name="example-textarea-input" rows="2" class="form-control" placeholder=""> <?php echo $servicesnotes;?></textarea>
 									</div>
 								</div>
 								</div>
@@ -1592,15 +1932,15 @@ include_once("include/functions.php");
 										<tbody>
 											<tr>
 												<td><div class="text-black">Project Name:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control " placeholder=""></span></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Number:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=""></span></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Product Type:</div></td>
-												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control input-sm" placeholder=""></span></td>
+												<td class="text-center" style="width: 80%;"><span class="text-muted"><input type="text" id="example-input-small" name="example-input-small" class="form-control " placeholder=""></span></td>
 											</tr>
 											<tr>
 												<td><div class="text-black">Date:</div></td>

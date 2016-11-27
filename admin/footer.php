@@ -15,5 +15,10 @@
         <!-- Load and execute javascript code used only in this page -->
         <script src="js/pages/readyDashboard.js"></script>
         <script>$(function(){ ReadyDashboard.init(); });</script>
+		
+		<script src="js/pages/uiProgress.js"></script>
+	<script>$(function(){ UiProgress.init(); });</script>
+
+
     </body>
 </html>
