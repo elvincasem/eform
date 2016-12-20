@@ -133,13 +133,14 @@ include_once("include/functions.php");
 				
 						<!-- Partial Responsive Block -->
 						<div>
-						 <button type="button" id="addproject" class="btn btn-effect-ripple btn-primary" href="#addproject" data-toggle="modal" onclick="addproject();">Add Project</button>
+						 
 					
 					</div>
 				<div class="block full">
 				
 					<div class="block-title">
 						<h2>Project List</h2>
+						<button type="button" id="addproject" class="btn btn-effect-ripple btn-primary" href="#addproject" data-toggle="modal" onclick="addproject();">Add Project</button>
 						<?php //print_r($heidirectory);?>
 					</div>
 					<div class="table-responsive">
